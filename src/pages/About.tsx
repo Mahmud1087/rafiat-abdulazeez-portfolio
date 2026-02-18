@@ -1,0 +1,224 @@
+import { useEffect, useRef } from 'react';
+import { BookOpen, Award, Users, Heart, Quote } from 'lucide-react';
+
+const About = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('anim-visible');
+            entry.target.classList.remove('anim-hidden');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const elements = sectionRef.current?.querySelectorAll('.anim-hidden');
+    elements?.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  const stats = [
+    { value: '15+', label: 'Books Published', icon: BookOpen },
+    { value: '50K+', label: 'Happy Readers', icon: Users },
+    { value: '10+', label: 'Years Experience', icon: Award },
+    { value: '100+', label: 'Workshops Hosted', icon: Heart },
+  ];
+
+  const achievements = [
+    'Bestselling Author on Amazon',
+    'Featured in Major Publications',
+    'Keynote Speaker at TEDx',
+    'Personal Development Coach',
+  ];
+
+  return (
+    <div ref={sectionRef} className="min-h-screen bg-gradient-to-b from-white to-purple-50/30">
+      {/* Hero Section */}
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-100/50 to-orange-100/30" />
+        
+        <div className="container-large relative z-10 px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Image Column */}
+            <div className="anim-hidden relative">
+              <div className="relative">
+                {/* Decorative elements */}
+                <div className="absolute -top-6 -left-6 w-32 h-32 bg-orange-400/20 rounded-full blur-2xl" />
+                <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-purple-500/20 rounded-full blur-2xl" />
+                
+                {/* Main Image */}
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                  <img 
+                    src="/images/author-portrait.jpg" 
+                    alt="Rafiat Abdulazeez"
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent" />
+                </div>
+                
+                {/* Floating badge */}
+                <div className="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-xl p-4 animate-fade-in">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-header text-lg text-purple-900">Award Winning</p>
+                      <p className="text-sm text-gray-600">Author</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Content Column */}
+            <div className="anim-hidden" style={{ transitionDelay: '0.2s' }}>
+              <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-6">
+                About Me
+              </span>
+              
+              <h1 className="text-h2 text-purple-900 mb-6">
+                Hello, I'm Rafiat Abdulazeez
+              </h1>
+              
+              <div className="space-y-4 text-body text-gray-700 leading-relaxed">
+                <p>
+                  I'm a passionate author and nonfiction book coach dedicated to helping people 
+                  unlock their full potential through the power of words. With over a decade of 
+                  experience in personal development writing, I've had the privilege of touching 
+                  the lives of thousands of readers worldwide.
+                </p>
+                <p>
+                  My journey began with a simple belief: that everyone has a story worth telling 
+                  and the capacity to transform their lives. Through my books, coaching sessions, 
+                  and workshops, I guide individuals on their path to self-discovery, empowerment, 
+                  and lasting change.
+                </p>
+                <p>
+                  When I'm not writing or coaching, you'll find me exploring new ideas, 
+                  connecting with my readers, or enjoying a good book with a cup of tea. 
+                  I believe in the transformative power of knowledge and the magic that happens 
+                  when we commit to growth.
+                </p>
+              </div>
+
+              {/* Achievements */}
+              <div className="mt-8">
+                <h3 className="font-header text-xl text-purple-900 mb-4">Highlights</h3>
+                <div className="flex flex-wrap gap-3">
+                  {achievements.map((achievement) => (
+                    <span 
+                      key={achievement}
+                      className="px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium"
+                    >
+                      {achievement}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-16 bg-purple-900">
+        <div className="container-large px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div 
+                key={stat.label}
+                className="anim-hidden text-center"
+                style={{ transitionDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-16 h-16 mx-auto mb-4 bg-orange-500 rounded-2xl flex items-center justify-center">
+                  <stat.icon className="w-8 h-8 text-white" />
+                </div>
+                <p className="font-header text-4xl text-white mb-2">{stat.value}</p>
+                <p className="text-purple-200 text-sm">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Philosophy Section */}
+      <section className="py-20 lg:py-32">
+        <div className="container-large px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="anim-hidden">
+              <Quote className="w-16 h-16 text-orange-500 mx-auto mb-8" />
+              <blockquote className="font-header text-3xl lg:text-4xl text-purple-900 mb-8 leading-tight">
+                "Words have the power to heal, inspire, and transform. My mission is to 
+                create content that empowers you to become the best version of yourself."
+              </blockquote>
+              <p className="text-body text-gray-600">— Rafiat Abdulazeez</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Journey Timeline */}
+      <section className="py-20 bg-gradient-to-b from-purple-50/50 to-white">
+        <div className="container-large px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 anim-hidden">
+            <span className="inline-block px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold mb-4">
+              My Journey
+            </span>
+            <h2 className="text-h2 text-purple-900">The Path So Far</h2>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-12">
+            {[
+              {
+                year: '2014',
+                title: 'The Beginning',
+                description: 'Published my first book and discovered my passion for helping others through writing.',
+              },
+              {
+                year: '2017',
+                title: 'Going Global',
+                description: 'Reached international audiences and became a bestselling author on Amazon.',
+              },
+              {
+                year: '2020',
+                title: 'Coaching Journey',
+                description: 'Started coaching aspiring authors and launched online workshops.',
+              },
+              {
+                year: '2024',
+                title: 'Today',
+                description: 'Continuing to inspire and empower through books, coaching, and community.',
+              },
+            ].map((milestone, index) => (
+              <div 
+                key={milestone.year}
+                className="anim-hidden flex gap-6 items-start"
+                style={{ transitionDelay: `${index * 0.15}s` }}
+              >
+                <div className="flex-shrink-0 w-20 text-right">
+                  <span className="font-header text-2xl text-orange-500">{milestone.year}</span>
+                </div>
+                <div className="flex-shrink-0 w-4 h-4 bg-purple-500 rounded-full mt-2 relative">
+                  <div className="absolute inset-0 bg-purple-500 rounded-full animate-ping opacity-30" />
+                </div>
+                <div className="flex-1 pb-8 border-b border-purple-100">
+                  <h3 className="font-header text-xl text-purple-900 mb-2">{milestone.title}</h3>
+                  <p className="text-body text-gray-600">{milestone.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default About;
