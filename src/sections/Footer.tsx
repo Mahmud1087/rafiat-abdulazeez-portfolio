@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import {
@@ -16,6 +16,10 @@ export function Footer() {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const location = useLocation();
+
+  const isHomePage = location.pathname === '/';
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +62,10 @@ export function Footer() {
   return (
     <footer
       ref={ref}
-      className='w-full bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 text-white py-16 lg:py-24'
+      className={cn(
+        'w-full bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 text-white py-16 lg:py-24',
+        isHomePage ? 'hidden' : 'block',
+      )}
     >
       <div className='container-large px-6 lg:px-12'>
         <div className='grid lg:grid-cols-12 gap-12 lg:gap-8'>
